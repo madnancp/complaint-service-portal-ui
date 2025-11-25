@@ -1,5 +1,6 @@
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 import { SparklesText } from "@/components/magicui/sparkles-text";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -11,7 +12,11 @@ const Hero = () => {
           </SparklesText>
           <p className="text-primary">NLP based Automatic complaint service app for authoritise</p>
         </div>
-        <InteractiveHoverButton>Try it</InteractiveHoverButton>
+        <Link href="/complaint">
+          <InteractiveHoverButton>
+            Try It
+          </InteractiveHoverButton>
+        </Link>
       </div>
     </div>
   )
