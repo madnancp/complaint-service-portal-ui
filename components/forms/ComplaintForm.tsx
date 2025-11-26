@@ -11,7 +11,10 @@ interface ComplaintFormProps {
 
 const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmit }) => {
 	const { handleSubmit, control } = useForm<CompliantFormValues>({
-		resolver: zodResolver(complaintFormSchema)
+		resolver: zodResolver(complaintFormSchema),
+		defaultValues: {
+			message: "",
+		}
 	})
 
 	return (
@@ -23,11 +26,12 @@ const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmit }) => {
 					control={control}
 					render={({ field, fieldState }) => (
 						<Field data-invalid={fieldState.invalid}>
-							<FieldLabel htmlFor="message">Message</FieldLabel>
+							<FieldLabel htmlFor="message">Your Complaint</FieldLabel>
 							<Textarea
 								{...field}
-								placeholder="Explain your complaint"
+								placeholder="Explian what you are facing."
 								id="message"
+								className="max-h-52 min-h-24"
 								aria-invalid={fieldState.invalid}
 							/>
 							{fieldState.invalid && (

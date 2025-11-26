@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { GridPattern } from "@/components/magicui/grid-pattern";
-import { cn } from "@/lib/utils";
-import Header from "@/components/header";
+import SideToolbarDock from "@/components/SideToolbar";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -24,29 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`relative w-full min-h-screen bg-background overflow-x-hidden ${poppins.className} antialiased`}>
-        <GridPattern
-          squares={[
-            [4, 4],
-            [5, 1],
-            [8, 2],
-            [5, 3],
-            [5, 5],
-            [10, 10],
-            [12, 15],
-            [15, 10],
-            [10, 15],
-            [15, 10],
-            [10, 15],
-            [15, 10],
-          ]}
-          className={cn(
-            "[mask-image:radial-gradient(1000px_circle_at_center,white,transparent)]",
-            "fixed inset-0 h-full w-full -z-10",
-          )}
-        />
-        <Header />
-        <main className="relative px-6 lg:px-36">
+      <body className={`relative w-full min-h-screen bg-background overflow-x-hidden ${poppins.className} antialiased relative`}>
+        <div className="fixed left-6 top-1/2 -translate-y-1/2 z-50">
+          <SideToolbarDock />
+        </div>
+
+        <main className="relative px-6 lg:px-36 col-span-7">
           {children}
         </main>
       </body>
