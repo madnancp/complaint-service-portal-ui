@@ -5,9 +5,6 @@ import ComplaintForm from "@/components/forms/ComplaintForm";
 const ComplaintPage = () => {
   return (
     <div className="pt-10">
-
-
-
       <h2 className="flex items-center justify-center gap-3 text-3xl font-semibold mx-10 mb-8">
         <span className="h-8 w-3 bg-black"></span>
         Complaint Submit Area

@@ -4,18 +4,33 @@ import { FieldGroup, Field, FieldLabel, FieldError } from "../ui/field";
 import { useForm, Controller } from "react-hook-form";
 import { type CompliantFormValues, complaintFormSchema } from "@/schemas/complaintForm.schemas";
 import { zodResolver } from '@hookform/resolvers/zod';
+import { complaintService } from "@/services/complaint.service";
+import { Complaint } from "@/types/complaint";
+import { useState } from "react";
+import { LoaderIcon } from "lucide-react";
 
 interface ComplaintFormProps {
-	onSubmit: () => void;
+	onSuccess: () => void;
 }
 
-const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmit }) => {
+const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSuccess }) => {
+	const [isLoading, setIsLoading] = useState(false)
 	const { handleSubmit, control } = useForm<CompliantFormValues>({
 		resolver: zodResolver(complaintFormSchema),
 		defaultValues: {
 			message: "",
 		}
 	})
+
+	const onSubmit = async (data: Complaint) => {
+		setIsLoading(true)
+		const response = await complaintService.create(data)
+		setIsLoading(false)
+		console.log(`response from api is : ${response}`)
+		onSuccess()
+	}
+
+
 
 	return (
 		<form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -43,7 +58,18 @@ const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmit }) => {
 				/>
 
 				<Field>
-					<Button type="submit">Submit</Button>
+					<Button type="submit" disabled={isLoading}>
+						{isLoading ? (
+							<span className="flex items-center gap-2 justify-center">
+								<LoaderIcon className="animate-spin" />
+								Submitting
+							</span>
+						) : (
+							<span>
+								Submit
+							</span>
+						)}
+					</Button>
 				</Field>
 			</FieldGroup>
 		</form>
