@@ -18,7 +18,7 @@ const ComplaintPage = () => {
           </CardHeader>
 
           <CardContent>
-            <ComplaintForm onSubmit={() => { console.log("complaint submitted") }} />
+            <ComplaintForm />
           </CardContent>
 
           <CardFooter></CardFooter>

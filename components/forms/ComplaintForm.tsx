@@ -5,15 +5,17 @@ import { useForm, Controller } from "react-hook-form";
 import { type CompliantFormValues, complaintFormSchema } from "@/schemas/complaintForm.schemas";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { complaintService } from "@/services/complaint.service";
-import { Complaint } from "@/types/complaint";
+import { ComplaintCreate } from "@/types/complaint";
 import { useState } from "react";
 import { LoaderIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface ComplaintFormProps {
-	onSuccess: () => void;
+	onSuccess?: () => void;
 }
 
 const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSuccess }) => {
+	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
 	const { handleSubmit, control } = useForm<CompliantFormValues>({
 		resolver: zodResolver(complaintFormSchema),
@@ -22,12 +24,13 @@ const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSuccess }) => {
 		}
 	})
 
-	const onSubmit = async (data: Complaint) => {
+	const onSubmit = async (data: ComplaintCreate) => {
 		setIsLoading(true)
 		const response = await complaintService.create(data)
 		setIsLoading(false)
 		console.log(`response from api is : ${response}`)
-		onSuccess()
+		onSuccess?.()
+		router.push(`/c/${response.uuid}`)
 	}
 
 
